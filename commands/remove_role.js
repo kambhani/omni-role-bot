@@ -37,7 +37,6 @@ const execute = async (interaction) => {
 
     if (users === "@everyone") {
       const members = await guild.members.fetch();
-      console.log(members);
       await members.forEach(async (member) => {
         await member.roles.remove(role);
       });

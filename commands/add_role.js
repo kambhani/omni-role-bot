@@ -41,8 +41,8 @@ const execute = async (interaction) => {
     // Assign the role to each user in the list
     let assigned = 0;
     for (const userId of userList) {
-      const user = await guild.members.fetch(userId);
-      await user.roles.add(role);
+      const member = await guild.members.fetch(userId);
+      await member.roles.add(role);
       assigned++;
     }
 

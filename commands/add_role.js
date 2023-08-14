@@ -17,7 +17,7 @@ const data = new SlashCommandBuilder()
       .setDescription("The role to assign all the users to")
       .setRequired(true);
   })
-  .setDefaultMemberPermissions(PermissionsBitField.Flags.Administrator);
+  .setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers);
 
 const execute = async (interaction) => {
   // Error message if needed

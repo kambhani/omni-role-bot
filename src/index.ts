@@ -18,13 +18,13 @@ const client = new Client({
 client.commands = new Collection();
 
 // Create the commands
-const commandsPath = "./commands";
+//const commandsPath = "./src/commands";
 const commandFiles = fs
-  .readdirSync(commandsPath)
-  .filter((file) => file.endsWith(".js"));
+  .readdirSync("./src/commands")
+  .filter((file) => file.endsWith(".ts"));
 
 for (const file of commandFiles) {
-  const filePath = `${commandsPath}/${file}`;
+  const filePath = `./commands/${file}`;
   import(filePath)
     .then((command) => {
       // Set a new item in the Collection with the key as the command name and the value as the exported module

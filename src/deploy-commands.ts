@@ -7,15 +7,15 @@ import { REST, Routes } from "discord.js";
 import fs from "node:fs";
 
 // Load the necessary environment variables
-const token = process.env.token;
-const clientId = process.env.clientId;
-const devServerId = process.env.devServerId;
+const token = process.env.token ?? "TOKEN";
+const clientId = process.env.clientId ?? "CLIENT_ID";
+const devServerId = process.env.devServerId ?? "DEV_SERVER_ID";
 
 // Store all the import promises
 let promises = [];
 
 // Grab all the command files from the commands directory you created earlier
-const commands = [];
+const commands: any[] = [];
 const commandsPath = "./commands";
 const commandFiles = fs
   .readdirSync(commandsPath)
@@ -61,7 +61,7 @@ Promise.all(promises).then(() => {
       });
 
       console.log(
-        `Successfully reloaded ${data.length} application (/) commands.`
+        `Successfully reloaded ${(data as []).length} application (/) commands.`
       );
     } catch (error) {
       // And of course, make sure you catch and log any errors!

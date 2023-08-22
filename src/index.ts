@@ -18,27 +18,28 @@ const client = new Client({
 client.commands = new Collection();
 
 // Create the commands
-//const commandsPath = "./src/commands";
 const commandFiles = fs
-  .readdirSync("./src/commands")
-  .filter((file) => file.endsWith(".ts"));
+  .readdirSync(new URL("./commands", import.meta.url))
+  .filter((file) => file.endsWith(".ts") || file.endsWith(".js"));
 
 for (const file of commandFiles) {
-  const filePath = `./commands/${file}`;
-  import(filePath)
+  //const filePath = `${__dirname}\\commands\\${file}`;
+  import(new URL(`./commands/${file}`, import.meta.url).toString())
     .then((command) => {
       // Set a new item in the Collection with the key as the command name and the value as the exported module
       if ("data" in command && "execute" in command) {
         client.commands.set(command.data.name, command);
       } else {
         console.log(
-          `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
+          `[WARNING] The command from file ${file} is missing a required "data" or "execute" property.`
         );
       }
     })
     .catch((err) => {
       console.log(err);
-      console.log(`[WARNING] The command at ${filePath} could not be loaded.`);
+      console.log(
+        `[WARNING] The command from file ${file} could not be loaded.`
+      );
     });
 }
 

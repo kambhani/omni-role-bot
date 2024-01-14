@@ -71,7 +71,7 @@ const execute = async (interaction: ChatInputCommandInteraction) => {
           member.roles.remove(role);
         }
       });
-      await interaction.editReply("Role has been removed from all users");
+      await interaction.editReply(`${role} has been removed from all users`);
       return;
     }
 

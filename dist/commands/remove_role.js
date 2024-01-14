@@ -46,7 +46,7 @@ const execute = (interaction) => __awaiter(void 0, void 0, void 0, function* () 
                     member.roles.remove(role);
                 }
             });
-            yield interaction.editReply("Role has been removed from all users");
+            yield interaction.editReply(`${role} has been removed from all users`);
             return;
         }
         const userRegex = /<([^>]+)>/g;

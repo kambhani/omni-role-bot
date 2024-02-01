@@ -1,4 +1,3 @@
-import { __awaiter } from "tslib";
 import { SlashCommandBuilder, PermissionsBitField, Role, } from "discord.js";
 const data = new SlashCommandBuilder()
     .setName("add_role_to_role")
@@ -16,24 +15,23 @@ const data = new SlashCommandBuilder()
         .setRequired(true);
 })
     .setDefaultMemberPermissions(PermissionsBitField.Flags.ModerateMembers);
-const execute = (interaction) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a, _b;
+const execute = async (interaction) => {
     let errorMessage = "There was an error running the command";
-    yield interaction.deferReply();
+    await interaction.deferReply();
     try {
         const guild = interaction.guild;
         if (guild === null) {
             errorMessage = "Guild not found!";
             throw new Error();
         }
-        const target_role = (_a = interaction.options.getRole("target_role")) !== null && _a !== void 0 ? _a : "";
-        const new_role = (_b = interaction.options.getRole("new_role")) !== null && _b !== void 0 ? _b : "";
+        const target_role = interaction.options.getRole("target_role") ?? "";
+        const new_role = interaction.options.getRole("new_role") ?? "";
         if (!(target_role instanceof Role) || !(new_role instanceof Role)) {
             errorMessage = "Invalid roles!";
             throw new Error();
         }
         let added = 0;
-        const members = yield guild.members.fetch();
+        const members = await guild.members.fetch();
         members.forEach((member) => {
             if (member.roles.cache.has(target_role.id) &&
                 !member.roles.cache.has(new_role.id)) {
@@ -41,11 +39,11 @@ const execute = (interaction) => __awaiter(void 0, void 0, void 0, function* () 
                 added++;
             }
         });
-        yield interaction.editReply(`${new_role} has been added to users with ${target_role}. ${added} additions were performed`);
+        await interaction.editReply(`${new_role} has been added to users with ${target_role}. ${added} additions were performed`);
     }
     catch (err) {
         console.log(err);
-        yield interaction.editReply(errorMessage);
+        await interaction.editReply(errorMessage);
     }
-});
+};
 export { data, execute };

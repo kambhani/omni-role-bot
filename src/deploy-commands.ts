@@ -16,13 +16,13 @@ let promises = [];
 
 // Grab all the command files from the commands directory you created earlier
 const commands: any[] = [];
-const commandsPath = "./commands";
+const commandsPath = "commands";
 const commandFiles = fs
-  .readdirSync(commandsPath)
+  .readdirSync(`./src/${commandsPath}`)
   .filter((file) => file.endsWith(".ts"));
 
 for (const file of commandFiles) {
-  const filePath = `${commandsPath}/${file}`;
+  const filePath = `./${commandsPath}/${file}`;
   promises.push(
     import(filePath)
       .then((command) => {

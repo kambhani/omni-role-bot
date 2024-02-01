@@ -1,4 +1,3 @@
-import { __awaiter } from "tslib";
 import dotenv from "dotenv";
 dotenv.config();
 import fs from "node:fs";
@@ -29,7 +28,7 @@ for (const file of commandFiles) {
 client.once(Events.ClientReady, (c) => {
     console.log(`Ready! Logged in as ${c.user.tag}`);
 });
-client.on(Events.InteractionCreate, (interaction) => __awaiter(void 0, void 0, void 0, function* () {
+client.on(Events.InteractionCreate, async (interaction) => {
     if (!interaction.isChatInputCommand())
         return;
     const command = interaction.client.commands.get(interaction.commandName);
@@ -38,22 +37,22 @@ client.on(Events.InteractionCreate, (interaction) => __awaiter(void 0, void 0, v
         return;
     }
     try {
-        yield command.execute(interaction);
+        await command.execute(interaction);
     }
     catch (error) {
         console.error(error);
         if (interaction.replied || interaction.deferred) {
-            yield interaction.followUp({
+            await interaction.followUp({
                 content: "There was an error while executing this command!",
                 ephemeral: true,
             });
         }
         else {
-            yield interaction.reply({
+            await interaction.reply({
                 content: "There was an error while executing this command!",
                 ephemeral: true,
             });
         }
     }
-}));
+});
 client.login(token);
